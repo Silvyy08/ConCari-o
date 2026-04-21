@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para ti, Esther 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #d4788a;
+      --rose-light: #f9edf0;
+      --rose-pale: #fdf5f7;
+      --gold: #c9a96e;
+      --gold-light: #fdf6ea;
+      --sage: #8aab96;
+      --lavender: #b8a0c8;
+      --lavender-light: #f5f0fa;
+      --text: #2e2025;
+      --text-muted: #8a7070;
+      --white: #ffffff;
+      --bg: #fefcfb;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(212,120,138,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(184,160,200,0.10) 0%, transparent 50%),
+        radial-gradient(circle at 60% 30%, rgba(201,169,110,0.07) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+    }
+
+    .hero-petals {
+      font-size: 40px;
+      letter-spacing: 12px;
+      display: block;
+      margin-bottom: 1.5rem;
+      animation: floatPetals 4s ease-in-out infinite;
+    }
+
+    @keyframes floatPetals {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 10vw, 80px);
+      font-weight: 300;
+      letter-spacing: 6px;
+      color: var(--rose);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .hero-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 3.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--text);
+      max-width: 480px;
+      margin: 0 auto 2rem;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 2.5rem 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: linear-gradient(to right, transparent, var(--rose), transparent);
+    }
+    .divider-icon { color: var(--rose); font-size: 14px; }
+
+    /* ── Cards ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--white);
+      border: 0.5px solid rgba(212,120,138,0.2);
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.5s ease;
+      transition-delay: var(--delay, 0s);
+    }
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .card:hover {
+      border-color: rgba(212,120,138,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(212,120,138,0.10);
+    }
+
+    .card-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--rose);
+      margin-bottom: 6px;
+    }
+    .card-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── Verse block ── */
+    .verse-block {
+      background: var(--lavender-light);
+      border: 0.5px solid rgba(184,160,200,0.4);
+      border-left: 3px solid var(--lavender);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.6s ease 0.3s;
+    }
+    .verse-block.visible { opacity: 1; transform: translateY(0); }
+
+    .verse-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--lavender);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verse-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 3vw, 20px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .verse-ref {
+      font-size: 12px;
+      color: var(--lavender);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* ── Accordion messages ── */
+    .moments-section { margin-bottom: 2rem; }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .moment-btn {
+      width: 100%;
+      background: var(--white);
+      border: 0.5px solid rgba(212,120,138,0.25);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      font-family: 'DM Sans', sans-serif;
+      text-align: left;
+    }
+    .moment-btn:hover {
+      background: var(--rose-pale);
+      border-color: rgba(212,120,138,0.5);
+    }
+    .moment-btn.active {
+      background: var(--rose-light);
+      border-color: var(--rose);
+    }
+
+    .moment-icon { font-size: 22px; flex-shrink: 0; }
+    .moment-label { font-size: 14px; font-weight: 500; color: var(--text); flex: 1; }
+    .moment-arrow {
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: transform 0.25s;
+    }
+    .moment-btn.active .moment-arrow { transform: rotate(180deg); }
+
+    .moment-content {
+      display: none;
+      background: var(--rose-light);
+      border: 0.5px solid rgba(212,120,138,0.3);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      padding: 1.25rem 1.5rem;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--text);
+      animation: slideDown 0.3s ease;
+    }
+    .moment-content.open { display: block; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Affirmations slider ── */
+    .affirmations {
+      background: linear-gradient(135deg, var(--gold-light), #fffdf8);
+      border: 0.5px solid rgba(201,169,110,0.3);
+      border-radius: 20px;
+      padding: 2rem 1.75rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .affirmation-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+
+    .affirmation-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(19px, 3.5vw, 24px);
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text);
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+
+    .affirmation-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1.25rem;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(201,169,110,0.3);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active { background: var(--gold); transform: scale(1.3); }
+
+    .affirmation-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 1rem;
+    }
+    .nav-btn {
+      background: transparent;
+      border: 0.5px solid rgba(201,169,110,0.4);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--gold); color: white; }
+
+    /* ── Closing ── */
+    .closing {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: all 0.6s ease;
+    }
+    .closing.visible { opacity: 1; transform: translateY(0); }
+
+    .closing-icon { font-size: 36px; display: block; margin-bottom: 1rem; }
+    .closing-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 3vw, 20px);
+      font-style: italic;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 420px;
+      margin: 0 auto 1rem;
+    }
+    .closing-signature {
+      font-size: 13px;
+      color: var(--rose);
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-petals">🌸 🤍 🌸</span>
+    <h1 class="hero-name">Esther</h1>
+    <p class="hero-sub">Con todo el cariño del mundo</p>
+    <p class="hero-quote">
+      "No estás sola en esto. Cada latido tuyo está acompañado de amor, de oración y de personas que te llevan en el corazón."
+    </p>
+  </section>
+
+  <div class="divider"><span class="divider-icon">✦</span></div>
+
+  <!-- Cards -->
+  <div class="cards-grid">
+    <div class="card" style="--delay: 0.1s">
+      <span class="card-icon">🙏</span>
+      <p class="card-title">Dios te cuida</p>
+      <p class="card-text">Sus manos guían a quienes te atienden. Estás protegida en todo momento.</p>
+    </div>
+    <div class="card" style="--delay: 0.2s">
+      <span class="card-icon">💪</span>
+      <p class="card-title">Eres valiente</p>
+      <p class="card-text">Tu valentía de hoy es admirable. Eres más fuerte de lo que imaginas.</p>
+    </div>
+    <div class="card" style="--delay: 0.3s">
+      <span class="card-icon">🌿</span>
+      <p class="card-title">Tu cuerpo sana</p>
+      <p class="card-text">Fue creado para recuperarse. Confía en el proceso con paz y calma.</p>
+    </div>
+    <div class="card" style="--delay: 0.4s">
+      <span class="card-icon">🕊️</span>
+      <p class="card-title">Paz en tu alma</p>
+      <p class="card-text">Suelta el miedo. Respira hondo. Hay mucho amor esperándote del otro lado.</p>
+    </div>
+  </div>
+
+  <!-- Versículo -->
+  <div class="verse-block">
+    <p class="verse-label">📖 Una palabra para ti</p>
+    <p class="verse-text">
+      "Porque yo sé los planes que tengo para ti — planes para prosperar y no para hacerte daño, planes de esperanza y de un futuro."
+    </p>
+    <p class="verse-ref">— Jeremías 29:11</p>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦</span></div>
+
+  <!-- Momentos -->
+  <div class="moments-section">
+    <h2 class="section-title">Un abrazo para cada momento 🤗</h2>
+
+    <button class="moment-btn" onclick="toggleMoment('antes')">
+      <span class="moment-icon">🌅</span>
+      <span class="moment-label">Antes de entrar...</span>
+      <span class="moment-arrow" id="arrow-antes">▼</span>
+    </button>
+    <div class="moment-content" id="msg-antes">
+      Esther, respira. Este momento es solo un paso hacia algo mejor. Eres valiente por estar aquí, y ese valor dice mucho de quién eres. No estás sola — el amor de quienes te rodean va contigo hasta dentro.
+    </div>
+
+    <button class="moment-btn" onclick="toggleMoment('durante')">
+      <span class="moment-icon">🤍</span>
+      <span class="moment-label">Mientras descansas...</span>
+      <span class="moment-arrow" id="arrow-durante">▼</span>
+    </button>
+    <div class="moment-content" id="msg-durante">
+      Mientras tu cuerpo hace su trabajo, permite que tu alma descanse también. No tienes que hacer nada más que confiar. Hay manos sabias cuidándote y un Dios que no te suelta ni un segundo.
+    </div>
+
+    <button class="moment-btn" onclick="toggleMoment('despues')">
+      <span class="moment-icon">🌺</span>
+      <span class="moment-label">Al despertar...</span>
+      <span class="moment-arrow" id="arrow-despues">▼</span>
+    </button>
+    <div class="moment-content" id="msg-despues">
+      Abre los ojos, Esther. Lo lograste. Cada día que venga desde ahora es un regalo. Tu recuperación está comenzando, y con ella, una nueva etapa llena de cosas hermosas. ¡Bienvenida de regreso!
+    </div>
+
+    <button class="moment-btn" onclick="toggleMoment('recuperacion')">
+      <span class="moment-icon">🌱</span>
+      <span class="moment-label">En tu recuperación...</span>
+      <span class="moment-arrow" id="arrow-recuperacion">▼</span>
+    </button>
+    <div class="moment-content" id="msg-recuperacion">
+      La recuperación no es solo física — también es un tiempo para recibir amor, para dejarte cuidar, para descansar sin culpa. Sana a tu propio ritmo. Cada pequeño avance es una victoria enorme. Estamos tan orgullosos de ti.
+    </div>
+  </div>
+
+  <!-- Afirmaciones -->
+  <div class="affirmations">
+    <p class="affirmation-label">✨ Afirmaciones para ti</p>
+    <p class="affirmation-text" id="affirmation-display">Soy fuerte, soy amada, soy capaz.</p>
+    <div class="affirmation-nav">
+      <button class="nav-btn" onclick="prevAffirmation()">‹</button>
+      <button class="nav-btn" onclick="nextAffirmation()">›</button>
+    </div>
+    <div class="affirmation-dots" id="dots"></div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">✦</span></div>
+
+  <!-- Cierre -->
+  <div class="closing">
+    <span class="closing-icon">🌸</span>
+    <p class="closing-text">
+      "Que Dios te cubra con su paz, que sientas el amor de quienes te rodean, y que tu camino de sanación sea suave y lleno de luz."
+    </p>
+    <p class="closing-signature">Con mucho cariño — para Esther 💛</p>
+  </div>
+
+</div>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.card, .verse-block, .closing').forEach(el => observer.observe(el));
+
+  // Accordion
+  function toggleMoment(id) {
+    const content = document.getElementById('msg-' + id);
+    const btn = content.previousElementSibling;
+    const arrow = document.getElementById('arrow-' + id);
+    const isOpen = content.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.moment-content').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.moment-btn').forEach(b => b.classList.remove('active'));
+
+    if (!isOpen) {
+      content.classList.add('open');
+      btn.classList.add('active');
+    }
+  }
+
+  // Affirmations
+  const affirmations = [
+    "Soy fuerte, soy amada, soy capaz.",
+    "Mi cuerpo tiene el poder de sanar.",
+    "Estoy rodeada de amor y protección.",
+    "Cada día me acerca a estar mejor.",
+    "Merezco descansar y recibirle cuidado.",
+    "Dios tiene el control de mi vida.",
+    "Soy valiente y lo voy a lograr.",
+    "Mi historia no termina aquí — apenas comienza."
+  ];
+
+  let current = 0;
+  const display = document.getElementById('affirmation-display');
+  const dotsContainer = document.getElementById('dots');
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    affirmations.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i === current ? ' active' : '');
+      d.onclick = () => goTo(i);
+      dotsContainer.appendChild(d);
+    });
+  }
+
+  function goTo(index) {
+    display.style.opacity = '0';
+    setTimeout(() => {
+      current = (index + affirmations.length) % affirmations.length;
+      display.textContent = affirmations[current];
+      display.style.opacity = '1';
+      buildDots();
+    }, 300);
+  }
+
+  function nextAffirmation() { goTo(current + 1); }
+  function prevAffirmation() { goTo(current - 1); }
+
+  buildDots();
+
+  // Auto-rotate affirmations every 5 seconds
+  setInterval(() => goTo(current + 1), 5000);
+</script>
+</body>
+</html>
